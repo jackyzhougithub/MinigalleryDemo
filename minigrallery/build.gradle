@@ -1,8 +1,9 @@
 apply plugin: 'com.android.library'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 android {
     compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         minSdkVersion 21
@@ -19,13 +20,31 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            java.srcDirs = ['src/main/kotlin', 'src/main/java-gen']
+            res.srcDirs = ['src/main/res']
+        }
+        main.jniLibs.srcDirs = ['libs']
+        main.assets.srcDirs = ['src/main/assets']
+    }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    compile 'com.android.support:appcompat-v7:25.2.0'
-    testCompile 'junit:junit:4.12'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation ("com.android.databinding:compiler:3.1.4"){
+
+    }
+    implementation ('com.squareup.retrofit2:retrofit:2.3.0'){
+
+    }
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
+
+    implementation ('android.arch.persistence.room:runtime:1.1.1'){
+
+    }
+
+    implementation project(':minigallerydatasource')
 }
