@@ -1,12 +1,12 @@
 apply plugin: 'com.android.library'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '27.0.3'
+    compileSdkVersion rootProject.compileSdkVersion
+    buildToolsVersion rootProject.buildToolsVersion
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 25
+        targetSdkVersion rootProject.targetSdkVersion
         versionCode 1
         versionName "1.0"
 
@@ -21,7 +21,8 @@ android {
     }
     sourceSets {
         main {
-            java.srcDirs = ['src/main/kotlin', 'src/main/java-gen']
+            java.srcDirs = ['src/main/kotlin', 'src/main/java-gen'
+            ,'src/main/java']
             res.srcDirs = ['src/main/res']
         }
         main.jniLibs.srcDirs = ['libs']
