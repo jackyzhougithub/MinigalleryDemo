@@ -10,7 +10,6 @@ android {
         versionCode 1
         versionName "1.0"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -31,5 +30,15 @@ android {
 }
 
 dependencies {
+    annotationProcessor ("com.android.databinding:compiler:3.1.4"){
+        exclude(module: 'support-v4')
+        exclude(module: 'support-annotations')
+    }
 
+    api "com.android.support:support-annotations:$supportLibVersion"
+    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation ('com.squareup.retrofit2:retrofit:2.3.0'){
+
+    }
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
 }

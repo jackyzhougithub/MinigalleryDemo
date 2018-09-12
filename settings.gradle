@@ -1,1 +1,3 @@
-include ':app', ':minigrallery'
+include ':app',
+        ':minigrallery',
+        ':minigallerydatasource'

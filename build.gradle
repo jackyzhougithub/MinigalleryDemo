@@ -3,8 +3,9 @@
 buildscript {
     ext.kotlin_version = '1.2.51'
     repositories {
-        jcenter()
         google()
+        jcenter()
+
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
@@ -17,9 +18,10 @@ buildscript {
 
 allprojects {
     repositories {
+        google()
         jcenter()
         maven { url "https://maven.google.com" }
-        google()
+
     }
 }
 
@@ -32,10 +34,10 @@ ext{
     publishVersion = '1.0.0'
     licences = ['Apache-2.0']
 
-    compileSdkVersion = 27
-    buildToolsVersion = '26.0.2'
-    targetSdkVersion = 27
-    supportLibVersion = '27.1.1'
+    compileSdkVersion = 26
+    buildToolsVersion = '27.0.3'
+    targetSdkVersion = 26
+    supportLibVersion = '25.3.0'
 }
 
 task clean(type: Delete) {

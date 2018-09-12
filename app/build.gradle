@@ -18,6 +18,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    dataBinding{
+        enabled true
+    }
 }
 
 dependencies {
@@ -25,6 +28,5 @@ dependencies {
     implementation "com.android.support:appcompat-v7:$supportLibVersion"
     implementation "com.android.support:cardview-v7:$supportLibVersion"
     implementation "com.android.support:design:$supportLibVersion"
-
     implementation project(':minigrallery')
 }
