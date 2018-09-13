@@ -11,8 +11,8 @@ import java.io.FileNotFoundException;
  * @author jacky_zhou
  * @version 2018/9/12.
  */
-class FileUtil {
-    static File getExternalStorageDirectory() throws Exception {
+public class FileUtil {
+    public static File getExternalStorageDirectory() throws Exception {
         //Sdcard 不存在
         if (!Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             throw new FileNotFoundException("SDCard Unmounted");
@@ -52,7 +52,7 @@ class FileUtil {
         return orginFile.renameTo(new File(newFileName));
     }
 
-    static String getFilePathWithoutSuffix(String fileName) {
+    public static String getFilePathWithoutSuffix(String fileName) {
         if (TextUtils.isEmpty(fileName)) {
             return "";
         }

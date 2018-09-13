@@ -108,7 +108,7 @@ public class DownLoadManager {
             mSuffix = "." + FileUtil.getFileSuffix(mUrl);
             mPresenter = new DownloadPresenter(mTaskId, this.callback);
             mTempFile = getLocalTmpFile();
-            mHandler = new MyHandler(this);
+//            mHandler = new MyHandler(this);
         }
 
         public void setSaveFilePath(String localFilePath) {
@@ -186,7 +186,7 @@ public class DownLoadManager {
         private ProgressBean progressBean = new ProgressBean();
 
         private void callbackInMainThread(int messageType, ProgressBean progressBean) {
-            mHandler.obtainMessage(messageType,progressBean).sendToTarget();
+            handleMessage(messageType,progressBean);
         }
 
         private void handleMessage(int messageType, ProgressBean progressBean) {

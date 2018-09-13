@@ -7,7 +7,7 @@ import java.security.NoSuchAlgorithmException;
  * @author jacky_zhou
  * @version 2018/9/12.
  */
-class MD5Tool {
+public class MD5Tool {
     private static final char HEX_DIGITS[] =
             {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
 
@@ -17,7 +17,7 @@ class MD5Tool {
      * @param password 字符串
      * @return 字符串对应的MD5
      */
-    static String getMD5(String password) {
+    public static String getMD5(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("MD5");
             digest.update(password.getBytes());
