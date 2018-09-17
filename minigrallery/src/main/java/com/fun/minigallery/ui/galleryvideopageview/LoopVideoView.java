@@ -1,4 +1,4 @@
-package com.fun.minigallery.galleryvideopageview;
+package com.fun.minigallery.ui.galleryvideopageview;
 
 import android.content.Context;
 import android.media.MediaPlayer;

@@ -1,6 +1,7 @@
 package com.fun.minigallery.util;
 
 import android.content.Context;
+import android.databinding.BindingAdapter;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -18,4 +19,8 @@ public class GlideUtil {
         Glide.with(context).load(url).into(imageView);
     }
 
+    @BindingAdapter({"imageUrl"})
+    public static void loadImage(ImageView imageView, String url) {
+        GlideUtil.disPlayImage(imageView.getContext(),url,imageView);
+    }
 }

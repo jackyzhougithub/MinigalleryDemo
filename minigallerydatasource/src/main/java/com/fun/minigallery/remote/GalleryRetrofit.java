@@ -1,4 +1,4 @@
-package com.fun.minigallery.model.remote;
+package com.fun.minigallery.remote;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;

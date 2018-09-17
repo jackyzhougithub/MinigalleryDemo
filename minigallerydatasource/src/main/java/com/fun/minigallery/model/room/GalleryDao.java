@@ -1,9 +1,10 @@
-package com.fun.minigallery.model;
+package com.fun.minigallery.model.room;
 
 import android.arch.persistence.room.Dao;
-import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
+
+import com.fun.minigallery.model.GalleryEntity;
 
 import java.util.List;
 
@@ -14,8 +15,8 @@ import java.util.List;
 @Dao
 public interface GalleryDao  {
     @Query("SELECT * FROM gallery")
-    List<GalleryInfo> getAll();
+    List<GalleryEntity> getAll();
 
     @Update
-    void insertAll(List<GalleryInfo> users);
+    void insertAll(List<GalleryEntity> users);
 }

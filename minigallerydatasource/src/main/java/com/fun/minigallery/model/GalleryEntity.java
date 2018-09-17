@@ -12,14 +12,13 @@ import com.fun.minigallery.download.FileUtil;
 import com.fun.minigallery.download.MD5Tool;
 
 import java.io.File;
-import java.io.Serializable;
 
 /**
  * @author jacky_zhou
  * @version 2018/9/12.
  */
 @Entity(tableName = "gallery")
-public class GalleryInfo implements Serializable {
+public class GalleryEntity implements Gallery {
     @PrimaryKey
     private long id;
 
@@ -28,6 +27,18 @@ public class GalleryInfo implements Serializable {
     @ColumnInfo(name = "second_col")
     private String videoUrl;
 
+    public GalleryEntity(){
+
+    }
+
+    public GalleryEntity(Gallery gallery){
+        this.id = gallery.getId();
+        this.imageUrl = gallery.getImageUrl();
+        this.videoUrl = gallery.getVideoUrl();
+        this.localVideoPath = gallery.getLocalVideoPath();
+    }
+
+    @Override
     public String getLocalVideoPath() {
         String path = getLocalVideoAbsolutePath();
         if (path == null){
@@ -109,6 +120,7 @@ public class GalleryInfo implements Serializable {
 
     private transient String localVideoPath;
 
+    @Override
     public long getId() {
         return id;
     }
@@ -117,6 +129,7 @@ public class GalleryInfo implements Serializable {
         this.id = id;
     }
 
+    @Override
     public String getImageUrl() {
         return imageUrl;
     }
@@ -138,8 +151,8 @@ public class GalleryInfo implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (obj instanceof GalleryInfo) {
-            GalleryInfo cp = (GalleryInfo) obj;
+        if (obj instanceof GalleryEntity) {
+            GalleryEntity cp = (GalleryEntity) obj;
             return this.id == cp.id
                     && theSameImageUrl(cp.imageUrl)
                     && theSameVideoUrl(cp.videoUrl);

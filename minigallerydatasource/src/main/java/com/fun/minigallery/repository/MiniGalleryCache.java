@@ -1,8 +1,10 @@
-package com.fun.minigallery.model;
+package com.fun.minigallery.repository;
 
 import android.content.Context;
 
-import com.fun.minigallery.model.remote.RemoteGalleryCache;
+import com.fun.minigallery.model.GalleryEntity;
+import com.fun.minigallery.model.room.MiniGalleryDatabase;
+import com.fun.minigallery.remote.RemoteGalleryCache;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +16,7 @@ import java.util.List;
 public class MiniGalleryCache implements RemoteGalleryCache.DataCallback {
 
     private RemoteGalleryCache remoteGalleryCache;
-    private List<GalleryInfo> galleryInfoList = new ArrayList<>();
+    private List<GalleryEntity> galleryInfoList = new ArrayList<>();
     private String remoteUrl;
     private List<CacheChangedCallback> cacheChangedCallbacks = new ArrayList<>();
     private Context context;
@@ -24,7 +26,7 @@ public class MiniGalleryCache implements RemoteGalleryCache.DataCallback {
     }
 
     @Override
-    public void syncData(List<GalleryInfo> data) {
+    public void syncData(List<GalleryEntity> data) {
         if (data == null) {
             return;
         }
@@ -32,7 +34,7 @@ public class MiniGalleryCache implements RemoteGalleryCache.DataCallback {
         sync(data);
     }
 
-    private void sync(List<GalleryInfo> data){
+    private void sync(List<GalleryEntity> data){
         galleryInfoList.clear();
         galleryInfoList.addAll(data);
         // 根据策略刷新
@@ -47,20 +49,20 @@ public class MiniGalleryCache implements RemoteGalleryCache.DataCallback {
      * 根据策略选择是否刷新 这里都先默认数据改变就马上同步
      * @return 是否需要刷新
      */
-    private boolean needSync(List<GalleryInfo> data){
+    private boolean needSync(List<GalleryEntity> data){
         if (galleryInfoList.size() != data.size()) {
             return true;
         }
         return theSameData(data);
     }
 
-    private boolean theSameData(List<GalleryInfo> data ){
+    private boolean theSameData(List<GalleryEntity> data ){
         if (data == null || galleryInfoList.size() != data.size()) {
             return true;
         }
         for (int i = 0; i < data.size(); i++) {
-            GalleryInfo newGalleryInfo = data.get(i);
-            GalleryInfo galleryInfo = galleryInfoList.get(i);
+            GalleryEntity newGalleryInfo = data.get(i);
+            GalleryEntity galleryInfo = galleryInfoList.get(i);
             if (galleryInfo != null && newGalleryInfo != null){
                 if (!galleryInfo.equals(newGalleryInfo)){
                     return false;
@@ -71,7 +73,7 @@ public class MiniGalleryCache implements RemoteGalleryCache.DataCallback {
         return true;
     }
 
-    public List<GalleryInfo> getGalleryList() {
+    public List<GalleryEntity> getGalleryList() {
         return galleryInfoList;
     }
 
@@ -83,7 +85,7 @@ public class MiniGalleryCache implements RemoteGalleryCache.DataCallback {
         syncFromRemote();
     }
 
-    private void notifyDataSync(List<GalleryInfo> data){
+    private void notifyDataSync(List<GalleryEntity> data){
         for (int i = 0; i < cacheChangedCallbacks.size(); i++) {
             CacheChangedCallback cacheChangedCallback = cacheChangedCallbacks.get(i);
             if (cacheChangedCallback == null){
@@ -121,7 +123,7 @@ public class MiniGalleryCache implements RemoteGalleryCache.DataCallback {
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                List<GalleryInfo> galleryInfos = MiniGalleryDatabase.getInstance(context).galleryDao().getAll();
+                List<GalleryEntity> galleryInfos = MiniGalleryDatabase.getInstance(context).galleryDao().getAll();
                 if (galleryInfos != null){
                     sync(galleryInfos);
                 }
@@ -144,6 +146,6 @@ public class MiniGalleryCache implements RemoteGalleryCache.DataCallback {
         /**
          * 数据同步
          */
-        void onSync(List<GalleryInfo> data);
+        void onSync(List<GalleryEntity> data);
     }
 }

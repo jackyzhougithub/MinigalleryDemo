@@ -1,8 +1,7 @@
-package com.fun.minigallery.galleryvideopageview;
+package com.fun.minigallery.ui.galleryvideopageview;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,7 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.fun.minigallery.model.GalleryInfo;
+import com.fun.minigallery.model.GalleryEntity;
 import com.fun.minigallery.util.DeviceUtil;
 import com.fun.minigrallery.R;
 
@@ -29,7 +28,7 @@ import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
  */
 public class GalleryVideoView extends ViewPager {
 
-    private List<GalleryInfo> galleryInfoList = new ArrayList<>();
+    private List<GalleryEntity> galleryInfoList = new ArrayList<>();
     private PageAdapter pageAdapter;
 
     public GalleryVideoView(@NonNull Context context) {
@@ -56,7 +55,7 @@ public class GalleryVideoView extends ViewPager {
         setAdapter(pageAdapter);
     }
 
-    public void updateData(List<GalleryInfo> galleryInfoList) {
+    public void updateData(List<GalleryEntity> galleryInfoList) {
         this.galleryInfoList.clear();
         this.galleryInfoList.addAll(galleryInfoList);
         pageAdapter.notifyDataSetChanged();
@@ -94,7 +93,7 @@ public class GalleryVideoView extends ViewPager {
         @Override
         public Object instantiateItem(@NonNull ViewGroup container, int position) {
             rootView = LayoutInflater.from(container.getContext()).inflate(R.layout.minigallery_video_adapter,container,false);
-            GalleryInfo galleryInfo = galleryInfoList.get(position);
+            GalleryEntity galleryInfo = galleryInfoList.get(position);
             videoView = rootView.findViewById(R.id.video);
             int oreintation = DeviceUtil.isPort(container.getContext()) ? ORIENTATION_PORTRAIT : ORIENTATION_LANDSCAPE;
             relayoutVideoLayout(oreintation);
@@ -116,7 +115,7 @@ public class GalleryVideoView extends ViewPager {
             videoView.setLayoutParams(layoutParams);
         }
 
-        private void setVideo(GalleryInfo galleryInfo,LoopVideoView videoView){
+        private void setVideo(GalleryEntity galleryInfo, LoopVideoView videoView){
             if (galleryInfo.getLocalVideoPath() == null){
                 Uri uri = Uri.parse(galleryInfo.getVideoUrl());
                 videoView.setVideoURI(uri);

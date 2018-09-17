@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="100dp"
-    android:layout_height="116dp"
-    android:layout_margin="4dp"
-    >
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="galleryInfo"
+            type="com.fun.minigallery.model.Gallery"/>
+    </data>
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="100dp"
+        android:layout_height="116dp"
+        android:layout_margin="4dp"
+        >
 
-    <ImageView
-        android:id="@+id/ivPic"
-        android:scaleType="centerInside"
-        android:layout_margin="3dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <TextView
-        android:id="@+id/tvId"
-        android:layout_gravity="center_horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/ivPic"
+            android:scaleType="centerInside"
+            android:layout_margin="3dp"
+            app:imageUrl="@{galleryInfo.imageUrl}"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tvId"
+            android:text="@{@string/gallery_id(galleryInfo.id)}"
+            android:layout_gravity="center_horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
+</layout>

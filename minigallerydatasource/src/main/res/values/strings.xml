@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MinigalleryDataSource</string>
+    <string name="gallery_id">id is : $%d</string>
 </resources>

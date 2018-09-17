@@ -1,7 +1,7 @@
-package com.fun.minigallery.model.remote;
+package com.fun.minigallery.remote;
 
 
-import com.fun.minigallery.model.GalleryInfo;
+import com.fun.minigallery.model.GalleryEntity;
 
 import java.util.List;
 
@@ -16,7 +16,7 @@ import retrofit2.http.Url;
  */
 public interface GalleryService {
     @GET
-    Call<List<GalleryInfo>> getGalleryInfo(@Url String url);
+    Call<List<GalleryEntity>> getGalleryInfo(@Url String url);
 
     @GET
     Call<ResponseBody> downloadFileWithDynamicUrlSync(@Url String fileUrl);

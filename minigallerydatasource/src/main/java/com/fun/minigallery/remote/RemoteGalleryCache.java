@@ -1,9 +1,9 @@
-package com.fun.minigallery.model.remote;
+package com.fun.minigallery.remote;
 
 import android.util.Log;
 
 
-import com.fun.minigallery.model.GalleryInfo;
+import com.fun.minigallery.model.GalleryEntity;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -11,7 +11,6 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -46,16 +45,16 @@ public class RemoteGalleryCache {
     }
 
     private void fetchFromRemote() {
-        Call<List<GalleryInfo>> call = galleryService.getGalleryInfo(fetchUrl);
-        call.enqueue(new Callback<List<GalleryInfo>>() {
+        Call<List<GalleryEntity>> call = galleryService.getGalleryInfo(fetchUrl);
+        call.enqueue(new Callback<List<GalleryEntity>>() {
             @Override
-            public void onResponse(Call<List<GalleryInfo>> call, Response<List<GalleryInfo>> response) {
+            public void onResponse(Call<List<GalleryEntity>> call, Response<List<GalleryEntity>> response) {
                 Log.e(TAG, "onSuccess --- " + response.body());
                 if (dataCallback == null || response.body() == null) {
                     return;
                 }
                 try {
-                    List<GalleryInfo> galleryInfos = response.body();
+                    List<GalleryEntity> galleryInfos = response.body();
                     dataCallback.syncData(galleryInfos);
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -63,14 +62,14 @@ public class RemoteGalleryCache {
             }
 
             @Override
-            public void onFailure(Call<List<GalleryInfo>> call, Throwable t) {
+            public void onFailure(Call<List<GalleryEntity>> call, Throwable t) {
                 Log.e(TAG, "onFailed --- " + t.getMessage());
             }
         });
     }
 
-    private List<GalleryInfo> fromJson(String json) {
-        Type listType = new TypeToken<List<GalleryInfo>>() {
+    private List<GalleryEntity> fromJson(String json) {
+        Type listType = new TypeToken<List<GalleryEntity>>() {
         }.getType();
         return sGson.fromJson(json, listType);
     }
@@ -79,6 +78,6 @@ public class RemoteGalleryCache {
         /**
          *
          */
-        void syncData(List<GalleryInfo> data);
+        void syncData(List<GalleryEntity> data);
     }
 }

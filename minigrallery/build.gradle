@@ -29,6 +29,9 @@ android {
         main.jniLibs.srcDirs = ['libs']
         main.assets.srcDirs = ['src/main/assets']
     }
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {

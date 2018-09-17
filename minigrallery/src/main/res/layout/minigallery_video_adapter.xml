@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:gravity="center"
     android:layout_height="wrap_content">
-    <com.fun.minigallery.galleryvideopageview.LoopVideoView
+    <com.fun.minigallery.ui.galleryvideopageview.LoopVideoView
         android:id="@+id/video"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

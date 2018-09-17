@@ -2,7 +2,6 @@ package minigrallery.fun.com.minigallerydemo;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -11,9 +10,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
-import com.fun.minigallery.galleryrecyclellview.MiniGalleryView;
-import com.fun.minigallery.model.GalleryInfo;
-import com.fun.minigallery.model.MiniGalleryCache;
+import com.fun.minigallery.ui.galleryrecyclellview.MiniGalleryView;
+import com.fun.minigallery.model.GalleryEntity;
+import com.fun.minigallery.repository.MiniGalleryCache;
 
 import java.util.List;
 
@@ -50,7 +49,6 @@ public class MainActivity extends AppCompatActivity implements MiniGalleryCache.
                 onBackPressed();
             }
         });
-        miniGalleryView.updateData(miniGalleryCache.getGalleryList());
         miniGalleryCache.registerCallback(this);
     }
 
@@ -77,8 +75,8 @@ public class MainActivity extends AppCompatActivity implements MiniGalleryCache.
     }
 
     @Override
-    public void onSync(List<GalleryInfo> data) {
-        miniGalleryView.updateData(data);
+    public void onSync(List<GalleryEntity> data) {
+
     }
 
 }

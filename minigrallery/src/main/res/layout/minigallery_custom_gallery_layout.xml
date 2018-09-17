@@ -31,7 +31,7 @@
 
 
 
-    <com.fun.minigallery.galleryvideopageview.GalleryVideoView
+    <com.fun.minigallery.ui.galleryvideopageview.GalleryVideoView
         android:layout_marginTop="100dp"
         android:id="@+id/vpVideo"
         android:layout_width="match_parent"
@@ -39,7 +39,7 @@
         android:minWidth="200dp"
         />
 
-    <com.yarolegovich.discretescrollview.DiscreteScrollView
+    <com.fun.minigallery.ui.galleryIndicatorImageview.MiniGalleryIndicatorRecycleView
         android:id="@+id/rvIndicator"
         android:layout_gravity="bottom"
         android:layout_marginTop="20dp"
