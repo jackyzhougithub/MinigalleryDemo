@@ -1,10 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:gravity="center"
-    android:layout_height="wrap_content">
-    <com.fun.minigallery.ui.galleryvideopageview.LoopVideoView
-        android:id="@+id/video"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-</FrameLayout>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="galleryInfo"
+            type="com.fun.minigallery.model.Gallery"/>
+    </data>
+    <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="wrap_content"
+        android:gravity="center"
+        android:layout_height="wrap_content">
+        <com.fun.minigallery.ui.galleryvideopageview.LoopVideoView
+            android:layout_gravity="center"
+            android:id="@+id/video"
+            app:videoUrl="@{galleryInfo.videoUrl}"
+            app:videoLocalPath="@{galleryInfo.localVideoPath}"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
+</layout>

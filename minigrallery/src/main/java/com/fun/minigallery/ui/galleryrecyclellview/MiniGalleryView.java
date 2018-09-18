@@ -1,6 +1,9 @@
 package com.fun.minigallery.ui.galleryrecyclellview;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
+import android.support.v4.view.ViewPager;
+import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +14,7 @@ import com.fun.minigallery.ui.galleryIndicatorImageview.MiniGalleryIndicatorRecy
 import com.fun.minigallery.ui.galleryvideopageview.GalleryVideoView;
 import com.fun.minigallery.model.GalleryEntity;
 import com.fun.minigrallery.R;
+import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +27,6 @@ public class MiniGalleryView extends FrameLayout {
     private MiniGalleryIndicatorRecycleView rvIndicator;
     private ImageView ivBack;
     private GalleryVideoView vpVideo;
-
-    private List<GalleryEntity> galleryInfoList = new ArrayList<>();
     private OnClickListener onItemClickListener;
 
     public MiniGalleryView(Context context) {
@@ -59,11 +61,47 @@ public class MiniGalleryView extends FrameLayout {
                 }
             }
         });
-        subscribeUi();
+        bindLinkWork();
     }
 
-    private void subscribeUi(){
-
+    public void updateData(List<GalleryEntity> galleryEntities){
+        vpVideo.updateData(galleryEntities);
+        rvIndicator.updateData(galleryEntities);
     }
 
+    /**
+     * 由于是双向联动此处就直接选择callback
+     */
+
+    private void bindLinkWork(){
+        vpVideo.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                if (rvIndicator != null && position < rvIndicator.getCount()){
+                    rvIndicator.smoothScrollToPosition(position);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        rvIndicator.addOnItemChangedListener(new DiscreteScrollView.OnItemChangedListener<RecyclerView.ViewHolder>() {
+            @Override
+            public void onCurrentItemChanged(@Nullable RecyclerView.ViewHolder viewHolder, int adapterPosition) {
+
+                if (vpVideo != null && adapterPosition < vpVideo.getCount() ){
+
+                    vpVideo.setCurrentItem(adapterPosition,true);
+                }
+            }
+        });
+    }
 }

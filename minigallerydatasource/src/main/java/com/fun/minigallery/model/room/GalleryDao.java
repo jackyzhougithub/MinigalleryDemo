@@ -1,5 +1,6 @@
 package com.fun.minigallery.model.room;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 import android.arch.persistence.room.Update;
@@ -15,8 +16,8 @@ import java.util.List;
 @Dao
 public interface GalleryDao  {
     @Query("SELECT * FROM gallery")
-    List<GalleryEntity> getAll();
+    LiveData< List<GalleryEntity>> getAll();
 
     @Update
-    void insertAll(List<GalleryEntity> users);
+    void insertAll(List<GalleryEntity> galleryEntities);
 }

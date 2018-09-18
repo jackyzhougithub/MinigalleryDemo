@@ -40,17 +40,17 @@ public class GalleryEntity implements Gallery {
 
     @Override
     public String getLocalVideoPath() {
-        String path = getLocalVideoAbsolutePath();
-        if (path == null){
+        localVideoPath = getLocalVideoAbsolutePath();
+        if (localVideoPath == null){
             return null;
         }
-        File file = new File(path);
+        File file = new File(localVideoPath);
         if (file.exists()){
-            return path;
+            return localVideoPath;
         }else {
             cacheVideo();
         }
-        return null;
+        return localVideoPath;
     }
     
     private String getLocalVideoAbsolutePath(){

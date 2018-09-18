@@ -5,9 +5,12 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
+import com.fun.minigallery.model.GalleryEntity;
 import com.fun.minigallery.ui.galleryrecyclellview.IndicatorAdapter;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
+
+import java.util.List;
 
 /**
  * @author jacky_zhou
@@ -38,4 +41,11 @@ public class MiniGalleryIndicatorRecycleView extends DiscreteScrollView {
                 .build());
     }
 
+    public void updateData(List<GalleryEntity> galleryEntities){
+        indicatorAdapter.updateData(galleryEntities);
+    }
+
+    public int getCount(){
+        return indicatorAdapter.getItemCount();
+    }
 }

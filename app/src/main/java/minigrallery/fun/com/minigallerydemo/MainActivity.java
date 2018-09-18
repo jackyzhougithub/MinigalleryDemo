@@ -1,8 +1,11 @@
 package minigrallery.fun.com.minigallerydemo;
 
 import android.Manifest;
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.pm.PackageManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +15,14 @@ import android.widget.Toast;
 
 import com.fun.minigallery.ui.galleryrecyclellview.MiniGalleryView;
 import com.fun.minigallery.model.GalleryEntity;
-import com.fun.minigallery.repository.MiniGalleryCache;
+import com.fun.minigallery.viewmodel.MiniGalleryViewModel;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements MiniGalleryCache.CacheChangedCallback{
+public class MainActivity extends AppCompatActivity {
 
     private static final int REQUEST_PERMISION = 1;
-    private static final String TEST_URL = "pictures";
-    private MiniGalleryCache miniGalleryCache;
+
     private MiniGalleryView miniGalleryView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +42,6 @@ public class MainActivity extends AppCompatActivity implements MiniGalleryCache.
     }
 
     private void initView(){
-        miniGalleryCache = new MiniGalleryCache(this);
-        miniGalleryCache.init(TEST_URL);
         miniGalleryView = (MiniGalleryView) findViewById(R.id.gallery);
         miniGalleryView.setOnBackClickListener(new View.OnClickListener() {
             @Override
@@ -49,7 +49,22 @@ public class MainActivity extends AppCompatActivity implements MiniGalleryCache.
                 onBackPressed();
             }
         });
-        miniGalleryCache.registerCallback(this);
+        final MiniGalleryViewModel viewModel = ViewModelProviders.of(this).get(MiniGalleryViewModel.class);
+        subscribeUi(viewModel);
+    }
+
+    private void subscribeUi(final MiniGalleryViewModel viewModel){
+        viewModel.getGalleryList().observe(this, new Observer<List<GalleryEntity>>() {
+            @Override
+            public void onChanged(@Nullable List<GalleryEntity> galleryEntities) {
+                if (galleryEntities == null){
+                    return;
+                }
+                if (miniGalleryView != null){
+                    miniGalleryView.updateData(galleryEntities);
+                }
+            }
+        });
     }
 
     @Override
@@ -71,12 +86,7 @@ public class MainActivity extends AppCompatActivity implements MiniGalleryCache.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        miniGalleryCache.unRegisterCallback(this);
     }
 
-    @Override
-    public void onSync(List<GalleryEntity> data) {
-
-    }
 
 }

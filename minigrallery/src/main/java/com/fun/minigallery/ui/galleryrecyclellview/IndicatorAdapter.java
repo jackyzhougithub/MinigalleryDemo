@@ -53,9 +53,6 @@ public class IndicatorAdapter extends RecyclerView.Adapter<IndicatorAdapter.View
             itemView.setLayoutParams(params);
             this.binding = binding;
         }
-
-
     }
-
 
 }

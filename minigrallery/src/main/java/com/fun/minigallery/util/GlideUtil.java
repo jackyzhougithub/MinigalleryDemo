@@ -2,9 +2,13 @@ package com.fun.minigallery.util;
 
 import android.content.Context;
 import android.databinding.BindingAdapter;
+import android.net.Uri;
 import android.widget.ImageView;
+import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+
+import java.io.File;
 
 
 /**
@@ -22,5 +26,17 @@ public class GlideUtil {
     @BindingAdapter({"imageUrl"})
     public static void loadImage(ImageView imageView, String url) {
         GlideUtil.disPlayImage(imageView.getContext(),url,imageView);
+    }
+
+    @BindingAdapter({"videoUrl","videoLocalPath"})
+    public static void loadVideo(VideoView videoView,String videoUrl,String videoLocalPath){
+        if (videoLocalPath == null || !(new File(videoLocalPath).exists())){
+            Uri uri = Uri.parse(videoUrl);
+            videoView.setVideoURI(uri);
+            videoView.start();
+        }else {
+            videoView.setVideoPath(videoLocalPath);
+            videoView.start();
+        }
     }
 }

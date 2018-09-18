@@ -30,10 +30,6 @@ android {
 }
 
 dependencies {
-    annotationProcessor ("com.android.databinding:compiler:3.1.4"){
-        exclude(module: 'support-v4')
-        exclude(module: 'support-annotations')
-    }
 
     api "com.android.support:support-annotations:$supportLibVersion"
     implementation 'com.google.code.gson:gson:2.8.2'
@@ -43,4 +39,7 @@ dependencies {
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     api "android.arch.persistence.room:runtime:1.1.1"
     annotationProcessor "android.arch.persistence.room:compiler:1.1.1"
+    api "android.arch.lifecycle:runtime:1.1.1"
+    api "android.arch.lifecycle:extensions:1.1.1"
+    annotationProcessor  "android.arch.lifecycle:compiler:1.1.1"
 }
