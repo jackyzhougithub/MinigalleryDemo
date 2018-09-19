@@ -2,6 +2,7 @@ package com.fun.minigallery.ui.galleryvideopageview;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.media.MediaPlayer;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -65,9 +66,17 @@ public class GalleryVideoPageAdapter extends PagerAdapter {
                 R.layout.minigallery_video_adapter, container, true);
         rootView = binding.getRoot();
         videoView = rootView.findViewById(R.id.video);
+        videoView.setVideoSizeChanged(new MediaPlayer.OnVideoSizeChangedListener() {
+            @Override
+            public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+               ViewGroup.LayoutParams layoutParams = rootView.getLayoutParams();
+               layoutParams.width = DeviceUtil.getScreenWidth(rootView.getContext());
+               layoutParams.height = DeviceUtil.getScreenWidth(rootView.getContext());
+               rootView.setLayoutParams(layoutParams);
+            }
+        });
         binding.setGalleryInfo(galleryInfoList.get(position));
-//        int orientation = DeviceUtil.isPort(container.getContext()) ? ORIENTATION_PORTRAIT : ORIENTATION_LANDSCAPE;
-//        relayoutVideoLayout(orientation);
+
         return rootView;
     }
 

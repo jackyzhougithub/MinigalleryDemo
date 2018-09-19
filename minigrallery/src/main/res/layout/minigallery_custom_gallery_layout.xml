@@ -20,7 +20,7 @@
     <TextView
         android:text="demo"
         android:id="@+id/tvTitle"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="10dp"
         android:layout_gravity="center_horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -32,7 +32,7 @@
 
 
     <com.fun.minigallery.ui.galleryvideopageview.GalleryVideoView
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="20dp"
         android:id="@+id/vpVideo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

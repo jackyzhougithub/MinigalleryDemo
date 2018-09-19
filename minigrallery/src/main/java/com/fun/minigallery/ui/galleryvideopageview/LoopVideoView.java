@@ -1,7 +1,6 @@
 package com.fun.minigallery.ui.galleryvideopageview;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
@@ -10,18 +9,15 @@ import android.widget.VideoView;
 
 import com.fun.minigallery.util.DeviceUtil;
 
-import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
-import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
-
 /**
  * @author jacky_zhou
  * @version 2018/9/13.
  */
 public class LoopVideoView extends VideoView implements MediaPlayer.OnCompletionListener {
     private boolean enableLoop = true;
-    private int width;
-    private int height;
-    private int orientation = -5;
+    private int videoWidth;
+    private int videoHeight;
+    private int layoutWidth;
 
     public LoopVideoView(Context context) {
         this(context, null);
@@ -43,22 +39,22 @@ public class LoopVideoView extends VideoView implements MediaPlayer.OnCompletion
 
     private void init() {
         setBackgroundColor(Color.TRANSPARENT);
+    }
+
+    public void setVideoSizeChanged(final MediaPlayer.OnVideoSizeChangedListener videoSizeChanged) {
         setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mp) {
-                mp.setOnInfoListener(new MediaPlayer.OnInfoListener() {
+                mp.setOnVideoSizeChangedListener(new MediaPlayer.OnVideoSizeChangedListener() {
                     @Override
-                    public boolean onInfo(MediaPlayer mp, int what, int extra) {
-                        if (what == MediaPlayer.MEDIA_INFO_VIDEO_RENDERING_START) {
-                            setBackgroundColor(Color.TRANSPARENT);
-                            width = mp.getVideoWidth();
-                            height = mp.getVideoHeight();
-                            int orientation = DeviceUtil.isPort(getContext()) ? ORIENTATION_PORTRAIT : ORIENTATION_LANDSCAPE;
-                            if (LoopVideoView.this.orientation != orientation) {
-                                relayoutVideoLayout(orientation);
-                            }
+                    public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                        videoWidth = mp.getVideoWidth();
+                        videoHeight = mp.getVideoHeight();
+                        if (videoSizeChanged != null){
+                            videoSizeChanged.onVideoSizeChanged(mp, width, height);
                         }
-                        return true;
+                        relayoutVideoLayout();
+                        invalidate();
                     }
                 });
 
@@ -66,42 +62,34 @@ public class LoopVideoView extends VideoView implements MediaPlayer.OnCompletion
         });
     }
 
-    private void relayoutVideoLayout(int orientation) {
-        this.orientation = orientation;
-        ViewGroup.LayoutParams layoutParams = getLayoutParams();
-        if (ORIENTATION_LANDSCAPE == orientation) {
-            int size = getVideoWidth() < getVideoHeight() ? getVideoWidth() : getVideoHeight();
-            layoutParams.width = size;
-            layoutParams.height = size;
-        } else {
-            layoutParams.width = ViewGroup.LayoutParams.MATCH_PARENT;
-            layoutParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
+    private void relayoutVideoLayout() {
+        if (this.videoWidth == 0 || this.videoHeight == 0) {
+            return;
         }
+        ViewGroup.LayoutParams layoutParams = getLayoutParams();
+        layoutParams.width =layoutWidth <= 0 ? DeviceUtil.getScreenWidth(getContext()) : layoutWidth;
+        float ratio = (this.videoWidth * 1.0F) / this.videoHeight;
+        layoutParams.height = (int) (layoutParams.width / ratio);
         setLayoutParams(layoutParams);
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if (orientation != ORIENTATION_LANDSCAPE){
-            super.onMeasure(widthMeasureSpec,heightMeasureSpec);
+        int width = getDefaultSize(this.videoWidth, widthMeasureSpec);
+        int height = getDefaultSize(this.videoHeight, heightMeasureSpec);
+        if (width == 0 || height == 0){
+            super.onMeasure(widthMeasureSpec, heightMeasureSpec);
             return;
         }
-        int width = getDefaultSize(this.width, widthMeasureSpec);
-        int height = getDefaultSize(this.height, heightMeasureSpec);
-        if (this.width > 0 && this.height > 0) {
-            if (orientation == ORIENTATION_LANDSCAPE){
-                int size = this.width > this.height ? height : width;
-                setMeasuredDimension(size, size);
-            }
-        }
+        setMeasuredDimension(width, height);
     }
 
     public int getVideoHeight() {
-        return height;
+        return videoHeight;
     }
 
     public int getVideoWidth() {
-        return width;
+        return videoWidth;
     }
 
     @Override
@@ -133,9 +121,7 @@ public class LoopVideoView extends VideoView implements MediaPlayer.OnCompletion
         start();
     }
 
-    public void setMeasure(int width, int height) {
-        this.width = width;
-        this.height = height;
+    public void setLayoutWidth(int width){
+        layoutWidth = width;
     }
-
 }
