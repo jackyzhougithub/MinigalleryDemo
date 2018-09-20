@@ -3,6 +3,9 @@ package com.fun.minigallery.download;
 import android.content.Context;
 import android.os.Environment;
 import android.text.TextUtils;
+import android.util.Log;
+
+import com.fun.minigallery.AppExecutors;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -62,5 +65,47 @@ public class FileUtil {
         }
         suffix = "." + suffix;
         return fileName.substring(0, fileName.length() - suffix.length());
+    }
+
+    /**
+     * demo 先不用线程池
+     */
+    public static void downFile(final String fileRemoteUrl, final String localFilePath){
+        AppExecutors executors = new AppExecutors();
+        executors.diskIO().execute(new Runnable() {
+            @Override
+            public void run() {
+                if (fileRemoteUrl == null || localFilePath == null){
+                    return;
+                }
+                DownLoadManager.getInstance().start(fileRemoteUrl, localFilePath, new DownloadCallback() {
+                    @Override
+                    public void onStart(String taskId) {
+
+                    }
+
+                    @Override
+                    public void onComplete(String taskId) {
+                        Log.d("GALLERYINFO","onComplete");
+                    }
+
+                    @Override
+                    public void onPause(String taskId) {
+
+                    }
+
+                    @Override
+                    public void onCancel(String taskId, DownloadException downEx) {
+
+                    }
+
+                    @Override
+                    public void onProgress(String taskId, long soFar, long total) {
+
+                    }
+                });
+            }
+        });
+
     }
 }

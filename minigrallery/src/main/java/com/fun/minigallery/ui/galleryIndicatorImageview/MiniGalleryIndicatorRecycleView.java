@@ -1,12 +1,12 @@
 package com.fun.minigallery.ui.galleryIndicatorImageview;
 
 import android.content.Context;
+import android.content.res.Configuration;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 
 import com.fun.minigallery.model.GalleryEntity;
-import com.fun.minigallery.ui.galleryrecyclellview.IndicatorAdapter;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 import com.yarolegovich.discretescrollview.transform.ScaleTransformer;
 
@@ -25,10 +25,10 @@ public class MiniGalleryIndicatorRecycleView extends DiscreteScrollView {
 
     public MiniGalleryIndicatorRecycleView(@NonNull Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        init(context);
+        init();
     }
 
-    private void init(Context context) {
+    private void init() {
         initIndicator();
     }
     private void initIndicator() {
@@ -39,6 +39,12 @@ public class MiniGalleryIndicatorRecycleView extends DiscreteScrollView {
         this.setItemTransformer(new ScaleTransformer.Builder()
                 .setMinScale(0.8f)
                 .build());
+    }
+
+    @Override
+    protected void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        indicatorAdapter.notifyDataSetChanged();
     }
 
     public void updateData(List<GalleryEntity> galleryEntities){

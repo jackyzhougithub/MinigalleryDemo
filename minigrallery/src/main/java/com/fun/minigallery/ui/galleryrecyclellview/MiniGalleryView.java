@@ -16,7 +16,6 @@ import com.fun.minigallery.model.GalleryEntity;
 import com.fun.minigrallery.R;
 import com.yarolegovich.discretescrollview.DiscreteScrollView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,7 +24,6 @@ import java.util.List;
  */
 public class MiniGalleryView extends FrameLayout {
     private MiniGalleryIndicatorRecycleView rvIndicator;
-    private ImageView ivBack;
     private GalleryVideoView vpVideo;
     private OnClickListener onItemClickListener;
 
@@ -49,7 +47,7 @@ public class MiniGalleryView extends FrameLayout {
     private void initView(final Context context) {
         View view = LayoutInflater.from(context)
                 .inflate(R.layout.minigallery_custom_gallery_layout, this, true);
-        ivBack = view.findViewById(R.id.ivBack);
+        ImageView ivBack = view.findViewById(R.id.ivBack);
         rvIndicator = view.findViewById(R.id.rvIndicator);
         vpVideo = view.findViewById(R.id.vpVideo);
 

@@ -27,4 +27,13 @@ public class DeviceUtil {
             return dm.widthPixels;
         }
     }
+
+    public static int getScreenHeight(Context context) {
+        DisplayMetrics dm = context.getApplicationContext().getResources().getDisplayMetrics();
+        if (dm.widthPixels > dm.heightPixels) {
+            return dm.widthPixels;
+        } else {
+            return dm.heightPixels;
+        }
+    }
 }

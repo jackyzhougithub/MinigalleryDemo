@@ -22,6 +22,7 @@ public class MiniGalleryViewModel extends AndroidViewModel {
     private static final String TEST_URL = "pictures";
     private final MediatorLiveData<List<GalleryEntity>> observableGalleryList;
     private GalleryRepository repository;
+
     public MiniGalleryViewModel(@NonNull Application application) {
         super(application);
         observableGalleryList = new MediatorLiveData<>();

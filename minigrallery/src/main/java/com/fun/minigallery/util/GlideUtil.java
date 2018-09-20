@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.VideoView;
 
 import com.bumptech.glide.Glide;
+import com.fun.minigallery.download.FileUtil;
 
 import java.io.File;
 
@@ -31,6 +32,7 @@ public class GlideUtil {
     @BindingAdapter({"videoUrl","videoLocalPath"})
     public static void loadVideo(VideoView videoView,String videoUrl,String videoLocalPath){
         if (videoLocalPath == null || !(new File(videoLocalPath).exists())){
+            FileUtil.downFile(videoUrl,videoLocalPath);
             Uri uri = Uri.parse(videoUrl);
             videoView.setVideoURI(uri);
             videoView.start();

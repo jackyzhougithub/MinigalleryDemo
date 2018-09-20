@@ -44,12 +44,6 @@ public class GalleryEntity implements Gallery {
         if (localVideoPath == null){
             return null;
         }
-        File file = new File(localVideoPath);
-        if (file.exists()){
-            return localVideoPath;
-        }else {
-            cacheVideo();
-        }
         return localVideoPath;
     }
     
@@ -71,47 +65,6 @@ public class GalleryEntity implements Gallery {
             e.printStackTrace();
         }
         return localVideoPath;
-    }
-
-    /**
-     * demo 先不用线程池
-     */
-    private void cacheVideo(){
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (videoUrl == null || localVideoPath == null){
-                    return;
-                }
-                DownLoadManager.getInstance().start(videoUrl, localVideoPath, new DownloadCallback() {
-                    @Override
-                    public void onStart(String taskId) {
-
-                    }
-
-                    @Override
-                    public void onComplete(String taskId) {
-                        Log.d("GALLERYINFO","onComplete");
-                    }
-
-                    @Override
-                    public void onPause(String taskId) {
-
-                    }
-
-                    @Override
-                    public void onCancel(String taskId, DownloadException downEx) {
-
-                    }
-
-                    @Override
-                    public void onProgress(String taskId, long soFar, long total) {
-
-                    }
-                });
-            }
-        });
-        thread.start();
     }
 
     public void setLocalVideoPath(String localVideoPath) {
@@ -138,6 +91,7 @@ public class GalleryEntity implements Gallery {
         this.imageUrl = imageUrl;
     }
 
+    @Override
     public String getVideoUrl() {
         return videoUrl;
     }

@@ -18,8 +18,6 @@ import com.fun.minigrallery.databinding.MinigalleryVideoAdapterBinding;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.res.Configuration.ORIENTATION_LANDSCAPE;
-import static android.content.res.Configuration.ORIENTATION_PORTRAIT;
 
 /**
  * @author jacky_zhou
@@ -32,23 +30,25 @@ public class GalleryVideoPageAdapter extends PagerAdapter {
     private View rootView;
     private LayoutInflater inflater;
 
-    public GalleryVideoPageAdapter(Context context){
+    public GalleryVideoPageAdapter(Context context) {
         inflater = LayoutInflater.from(context);
     }
+
     @Override
     public void notifyDataSetChanged() {
         mChildCount = getCount();
         super.notifyDataSetChanged();
     }
+
     @Override
     public int getCount() {
         return galleryInfoList.size();
     }
 
     @Override
-    public int getItemPosition(Object object)   {
-        if ( mChildCount > 0) {
-            mChildCount --;
+    public int getItemPosition(Object object) {
+        if (mChildCount > 0) {
+            mChildCount--;
             return POSITION_NONE;
         }
         return super.getItemPosition(object);
@@ -66,21 +66,23 @@ public class GalleryVideoPageAdapter extends PagerAdapter {
                 R.layout.minigallery_video_adapter, container, true);
         rootView = binding.getRoot();
         videoView = rootView.findViewById(R.id.video);
-        videoView.setVideoSizeChanged(new MediaPlayer.OnVideoSizeChangedListener() {
-            @Override
-            public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
-               ViewGroup.LayoutParams layoutParams = rootView.getLayoutParams();
-               layoutParams.width = DeviceUtil.getScreenWidth(rootView.getContext());
-               layoutParams.height = DeviceUtil.getScreenWidth(rootView.getContext());
-               rootView.setLayoutParams(layoutParams);
-            }
-        });
+        setVideoSizeChangedListener();
         binding.setGalleryInfo(galleryInfoList.get(position));
 
         return rootView;
     }
 
-
+    private void setVideoSizeChangedListener() {
+        videoView.setVideoSizeChanged(new MediaPlayer.OnVideoSizeChangedListener() {
+            @Override
+            public void onVideoSizeChanged(MediaPlayer mp, int width, int height) {
+                ViewGroup.LayoutParams layoutParams = rootView.getLayoutParams();
+                layoutParams.width = DeviceUtil.getScreenWidth(rootView.getContext());
+                layoutParams.height = DeviceUtil.getScreenWidth(rootView.getContext());
+                rootView.setLayoutParams(layoutParams);
+            }
+        });
+    }
 
     @Override
     public void destroyItem(@NonNull ViewGroup container, int position, @NonNull Object object) {

@@ -6,7 +6,6 @@ import android.arch.lifecycle.MediatorLiveData;
 import android.arch.lifecycle.Observer;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.fun.minigallery.AppExecutors;
 import com.fun.minigallery.model.GalleryEntity;
@@ -31,6 +30,7 @@ public class GalleryRepository {
     private final AppExecutors appExecutors;
     private final MiniGalleryDatabase database;
     private boolean needSyncFromRemoteImmediately = true;
+    
     private GalleryRepository(MiniGalleryDatabase database, String remoteUrl) {
         appExecutors = new AppExecutors();
         this.database = database;

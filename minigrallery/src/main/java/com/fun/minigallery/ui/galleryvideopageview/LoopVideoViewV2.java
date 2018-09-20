@@ -10,7 +10,6 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.Surface;
 import android.view.TextureView;
 import android.view.View;
@@ -23,6 +22,7 @@ import java.io.IOException;
  * @author jacky_zhou
  * @version 2018/9/18.
  */
+@Deprecated
 public class LoopVideoViewV2 extends TextureView implements MediaController.MediaPlayerControl {
     private int fixedWidth;
     private int fixedHeight;

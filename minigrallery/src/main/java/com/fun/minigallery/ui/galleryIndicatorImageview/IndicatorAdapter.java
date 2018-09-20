@@ -1,6 +1,7 @@
-package com.fun.minigallery.ui.galleryrecyclellview;
+package com.fun.minigallery.ui.galleryIndicatorImageview;
 
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -21,13 +22,14 @@ public class IndicatorAdapter extends RecyclerView.Adapter<IndicatorAdapter.View
     private List<GalleryEntity> galleryInfoList = new ArrayList<>();
 
     @Override
-    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         MinigalleryIndicatorAdapterBinding binding = DataBindingUtil.inflate(LayoutInflater.from(parent.getContext()), R.layout.minigallery_indicator_adapter, parent, false);
         return new ViewHolder(binding);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.resetLayoutByConfigChanged();
         holder.binding.setGalleryInfo(galleryInfoList.get(position));
         holder.binding.executePendingBindings();
     }
@@ -48,10 +50,15 @@ public class IndicatorAdapter extends RecyclerView.Adapter<IndicatorAdapter.View
 
         private ViewHolder(MinigalleryIndicatorAdapterBinding binding) {
             super(binding.getRoot());
-            ViewGroup.LayoutParams params = itemView.getLayoutParams();
-            params.width = DeviceUtil.getScreenWidth(itemView.getContext()) / 3;
-            itemView.setLayoutParams(params);
             this.binding = binding;
+        }
+
+        private void resetLayoutByConfigChanged(){
+            ViewGroup.LayoutParams params = itemView.getLayoutParams();
+            boolean isPort = DeviceUtil.isPort(itemView.getContext());
+            params.width = isPort ? DeviceUtil.getScreenWidth(itemView.getContext()) / 3
+                    : DeviceUtil.getScreenHeight(itemView.getContext()) / 3;
+            itemView.setLayoutParams(params);
         }
     }
 
